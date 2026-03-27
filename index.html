@@ -86,6 +86,25 @@ body::after {
 
 /* ==================== LANDING VIEW ==================== */
 
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--bg-primary);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  z-index: 10000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
 .landing-view {
   display: flex;
   flex-direction: column;
@@ -166,6 +185,7 @@ body::after {
   overflow: hidden;
   opacity: 0;
   animation: fadeSlideUp 0.6s ease forwards;
+  min-height: 100px;
 }
 
 .company-card::before {
@@ -245,6 +265,32 @@ body::after {
 .cv-view.active {
   display: block;
   animation: fadeIn 0.4s ease;
+}
+
+.loading-indicator {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+}
+
+.loading-indicator.active {
+  display: block;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
@@ -826,6 +872,29 @@ body::after {
   }
 }
 
+/* HIGH CONTRAST MODE */
+@media (prefers-contrast: more) {
+  :root {
+    --border: #444444;
+    --border-accent: #666666;
+    --text-secondary: #cccccc;
+    --text-muted: #aaaaaa;
+  }
+  
+  .company-card,
+  .exp-item,
+  .skill-card,
+  .edu-item,
+  .pet-project {
+    border-width: 2px;
+  }
+  
+  .company-card:focus-visible,
+  .back-button:focus-visible {
+    outline-width: 3px;
+  }
+}
+
 /* RESPONSIVE */
 @media (max-width: 640px) {
   .container { padding: 24px 20px 60px; }
@@ -896,6 +965,9 @@ body::after {
 </style>
 </head>
 <body>
+<div class="loading-indicator" id="loadingIndicator" aria-live="polite">
+  <div class="spinner" role="status" aria-label="Loading"></div>
+</div>
 
 <!-- LANDING VIEW (Company Selector) -->
 <div id="landing" class="landing-view">
@@ -914,7 +986,8 @@ body::after {
 </div>
 
 <!-- CV VIEW -->
-<div id="cv" class="cv-view" role="region" aria-label="Personalized CV">
+<div id="cv" class="cv-view">
+<main id="main-content" role="main">
   <button class="back-button" onclick="showLandingView()" aria-label="Back to company selection">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     Back to Companies
@@ -1161,6 +1234,7 @@ body::after {
   <footer class="footer">
     <p class="footer-text">Generated March 2026 — tomkristianabel@gmail.com</p>
   </footer>
+</main>
 </div>
 
 <script>
@@ -1335,10 +1409,21 @@ const allSkills = {
 // State
 let currentView = 'landing';
 let selectedCompany = null;
+let isTransitioning = false;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   renderCompanyGrid();
+  
+  // Handle initial hash URL on page load
+  if (window.location.hash && window.location.hash.length > 1) {
+    const hash = window.location.hash.slice(1);
+    if (companies[hash]) {
+      showCVView(hash, true);
+      return;
+    }
+  }
+  
   handleHashChange();
   window.addEventListener('hashchange', handleHashChange);
   
@@ -1384,9 +1469,15 @@ function renderCompanyGrid() {
 }
 
 // Show CV view
-function showCVView(companyKey) {
+function showCVView(companyKey, isInitial = false) {
   const company = companies[companyKey];
-  if (!company) return;
+  if (!company || isTransitioning) return;
+  
+  isTransitioning = true;
+  
+  // Show loading state
+  const loader = document.getElementById('loadingIndicator');
+  if (loader) loader.classList.add('active');
   
   selectedCompany = companyKey;
   currentView = 'cv';
@@ -1413,6 +1504,12 @@ function showCVView(companyKey) {
   
   // Scroll to top
   window.scrollTo(0, 0);
+  
+  // Hide loading state
+  setTimeout(() => {
+    if (loader) loader.classList.remove('active');
+    isTransitioning = false;
+  }, 150);
 }
 
 // Show landing view
