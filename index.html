@@ -6,35 +6,229 @@
     <title>JobFair Pitches</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a2e; color: #eee; line-height: 1.5; padding-bottom: 80px; }
-        .header { background: #16213e; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #0f3460; }
-        .header h1 { font-size: 1.2rem; color: #e94560; }
-        .search-box { margin-top: 10px; }
-        .search-box input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #0f3460; background: #0f3460; color: #fff; font-size: 16px; }
-        .nav { display: flex; gap: 5px; overflow-x: auto; padding: 10px 20px; background: #16213e; }
-        .nav-btn { padding: 8px 16px; background: #0f3460; border: none; border-radius: 20px; color: #aaa; font-size: 0.85rem; white-space: nowrap; cursor: pointer; transition: all 0.2s; }
-        .nav-btn.active { background: #e94560; color: #fff; }
-        .nav-btn:hover { background: #0f3460; }
-        .pitch-card { margin: 15px 20px; padding: 20px; background: #16213e; border-radius: 12px; border-left: 4px solid #e94560; }
-        .pitch-card h2 { font-size: 1.1rem; margin-bottom: 15px; color: #e94560; }
-        .section { margin-bottom: 12px; }
-        .section-label { font-size: 0.7rem; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
-        .section-content { font-size: 0.95rem; color: #ddd; }
-        .company-tag { display: inline-block; padding: 4px 10px; background: #0f3460; border-radius: 4px; font-size: 0.75rem; margin-right: 5px; margin-bottom: 5px; }
-        .priority-high { border-left-color: #e94560; }
-        .priority-medium { border-left-color: #f39c12; }
-        .priority-low { border-left-color: #27ae60; }
+        
+        :root {
+            --bg-primary: #0d0d1a;
+            --bg-secondary: #16213e;
+            --bg-card: #1a1a2e;
+            --accent: #e94560;
+            --accent-high: #e94560;
+            --accent-medium: #f39c12;
+            --accent-low: #27ae60;
+            --text-primary: #eee;
+            --text-secondary: #aaa;
+            --border: #0f3460;
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
+            line-height: 1.6; 
+            padding-bottom: 100px;
+            min-height: 100vh;
+        }
+        
+        /* Main container - centered with elegant max-width */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header styling */
+        .header { 
+            background: var(--bg-secondary); 
+            padding: 24px 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 32px;
+        }
+        
+        .header .container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .header h1 { 
+            font-size: 1.5rem; 
+            color: var(--accent); 
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .search-box { }
+        .search-box input { 
+            width: 100%; 
+            padding: 14px 18px; 
+            border-radius: 10px; 
+            border: 1px solid var(--border); 
+            background: var(--bg-card); 
+            color: var(--text-primary); 
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        /* Navigation - horizontal scroll on mobile, grid on desktop */
+        .nav { 
+            display: flex; 
+            gap: 8px; 
+            overflow-x: auto; 
+            padding: 12px 0; 
+            background: var(--bg-primary);
+            margin-bottom: 24px;
+            scrollbar-width: none;
+        }
+        .nav::-webkit-scrollbar { display: none; }
+        
+        .nav-btn { 
+            padding: 10px 18px; 
+            background: var(--bg-card); 
+            border: 1px solid var(--border); 
+            border-radius: 24px; 
+            color: var(--text-secondary); 
+            font-size: 0.85rem; 
+            white-space: nowrap; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            flex-shrink: 0;
+        }
+        .nav-btn.active { 
+            background: var(--accent); 
+            color: #fff; 
+            border-color: var(--accent);
+        }
+        .nav-btn:hover:not(.active) { 
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        
+        /* Pitch cards - proper card styling */
+        .pitch-card { 
+            margin-bottom: 20px; 
+            padding: 28px; 
+            background: var(--bg-card); 
+            border-radius: 16px; 
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent-high);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pitch-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .pitch-card h2 { 
+            font-size: 1.25rem; 
+            margin-bottom: 20px; 
+            color: var(--accent); 
+            font-weight: 600;
+        }
+        
+        .section { 
+            margin-bottom: 16px; 
+        }
+        .section-label { 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            color: var(--text-secondary); 
+            letter-spacing: 1.5px; 
+            margin-bottom: 6px; 
+            font-weight: 500;
+        }
+        .section-content { 
+            font-size: 0.95rem; 
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        
+        .company-tag { 
+            display: inline-block; 
+            padding: 5px 12px; 
+            background: var(--bg-secondary); 
+            border-radius: 6px; 
+            font-size: 0.75rem; 
+            margin-right: 6px; 
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+        
+        .priority-high { border-left-color: var(--accent-high); }
+        .priority-medium { border-left-color: var(--accent-medium); }
+        .priority-low { border-left-color: var(--accent-low); }
         .hidden { display: none; }
+        
+        /* Desktop optimizations */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 780px;
+                padding: 0 32px;
+            }
+            
+            .header .container {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .search-box {
+                width: 320px;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 16px 0;
+            }
+            
+            .pitch-card {
+                padding: 32px;
+            }
+            
+            .pitch-card h2 {
+                font-size: 1.4rem;
+            }
+            
+            .section-content {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Smooth animations */
+        .pitch-card {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>JobFair 2026 Pitches</h1>
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search company or keyword..." onkeyup="filterPitches()">
+        <div class="container">
+            <h1>JobFair 2026 Pitches</h1>
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search company or keyword..." onkeyup="filterPitches()">
+            </div>
         </div>
     </div>
-    <div class="nav" id="nav">
+    
+    <div class="container">
+        <div class="nav" id="nav">
         <button class="nav-btn active" onclick="showAll()">All</button>
         <button class="nav-btn" onclick="showPriority(1)">🔥 Hot</button>
         <button class="nav-btn" onclick="showCompany('Helmes')">Helmes</button>
@@ -340,6 +534,8 @@
         </div>
     </div>
 
+    </div>
+    
     <script>
         function showAll() {
             document.querySelectorAll('.pitch-card').forEach(el => el.classList.remove('hidden'));
