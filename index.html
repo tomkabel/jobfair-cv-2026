@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=JetBrains+Mono:wght@300;400;500&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" as="style">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -114,6 +114,10 @@ body::after {
   flex-direction: column;
   min-height: 100vh;
   padding-top: 40px;
+}
+
+.landing-view.hidden {
+  display: none;
 }
 
 .landing-header {
@@ -1450,31 +1454,51 @@ let currentView = 'landing';
 let selectedCompany = null;
 let isTransitioning = false;
 
-// Initialize
+// Initialize with error handling
 document.addEventListener('DOMContentLoaded', () => {
-  renderCompanyGrid();
-  
-  // Handle initial hash URL on page load
-  if (window.location.hash && window.location.hash.length > 1) {
-    const hash = window.location.hash.slice(1);
-    if (companies[hash]) {
-      showCVView(hash, true);
-      return;
+  try {
+    renderCompanyGrid();
+    
+    // Handle initial hash URL on page load
+    if (window.location.hash && window.location.hash.length > 1) {
+      const hash = window.location.hash.slice(1);
+      if (companies[hash]) {
+        showCVView(hash, true);
+        return;
+      } else {
+        console.warn('Invalid company hash:', hash);
+        // Clear invalid hash
+        history.replaceState({}, '', window.location.pathname);
+      }
     }
+    
+    handleHashChange();
+    
+    // Setup event listeners with error handling
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePopState);
+    
+    console.log('CV SPA initialized successfully');
+  } catch (error) {
+    console.error('Initialization error:', error);
+    // Fallback to showing landing view on error
+    showLandingView();
   }
-  
-  handleHashChange();
-  window.addEventListener('hashchange', handleHashChange);
-  
-  // Handle browser back/forward buttons
-  window.addEventListener('popstate', (e) => {
-    if (window.location.hash === '' || window.location.hash === '#') {
+});
+
+// Handle browser back/forward buttons with error handling
+function handlePopState(e) {
+  try {
+    if (!window.location.hash || window.location.hash === '#') {
       showLandingView();
     } else {
       handleHashChange();
     }
-  });
-});
+  } catch (error) {
+    console.error('PopState handler error:', error);
+    showLandingView();
+  }
+}
 
 // Render company grid
 function renderCompanyGrid() {
@@ -1507,48 +1531,94 @@ function renderCompanyGrid() {
   });
 }
 
-// Show CV view
+// Show CV view with validation and error handling
 function showCVView(companyKey, isInitial = false) {
+  // Validation
+  if (!companyKey || typeof companyKey !== 'string') {
+    console.error('Invalid company key:', companyKey);
+    showLandingView();
+    return;
+  }
+  
   const company = companies[companyKey];
-  if (!company || isTransitioning) return;
+  if (!company) {
+    console.error('Company not found:', companyKey);
+    showLandingView();
+    return;
+  }
+  
+  if (isTransitioning) {
+    console.warn('Transition in progress, ignoring request for:', companyKey);
+    return;
+  }
   
   isTransitioning = true;
   
-  // Show loading state
-  const loader = document.getElementById('loadingIndicator');
-  if (loader) loader.classList.add('active');
-  
-  selectedCompany = companyKey;
-  currentView = 'cv';
-  
-  // Apply theme
-  applyTheme(company.accent);
-  
-  // Update content
-  document.getElementById('heroTitle').textContent = company.heroTitle || company.summary.split('.')[0];
-  document.getElementById('summaryText').innerHTML = company.summary;
-  document.getElementById('petProjectDescription').textContent = company.petProjectFraming;
-  
-  // Reorder skills
-  renderSkills(company.skillPriority);
-  
-  // Switch views
-  document.getElementById('landing').style.display = 'none';
-  document.getElementById('cv').classList.add('active');
-  
-  // Update URL without triggering hashchange event
-  if (window.location.hash !== '#' + companyKey) {
-    history.pushState({ company: companyKey }, '', '#' + companyKey);
+  try {
+    // Show loading state
+    const loader = document.getElementById('loadingIndicator');
+    if (loader) loader.classList.add('active');
+    
+    selectedCompany = companyKey;
+    currentView = 'cv';
+    
+    // Apply theme with validation
+    applyTheme(company.accent);
+    
+    // Update content with fallbacks
+    const heroTitle = document.getElementById('heroTitle');
+    const summaryText = document.getElementById('summaryText');
+    const petProjectDesc = document.getElementById('petProjectDescription');
+    
+    if (heroTitle) {
+      heroTitle.textContent = company.heroTitle || company.summary?.split('.')[0] || company.name;
+    }
+    
+    if (summaryText) {
+      summaryText.innerHTML = company.summary || 'No summary available.';
+    }
+    
+    if (petProjectDesc) {
+      petProjectDesc.textContent = company.petProjectFraming || 'Project details coming soon.';
+    }
+    
+    // Reorder skills
+    renderSkills(company.skillPriority);
+    
+    // Switch views
+    const landingView = document.getElementById('landing');
+    const cvView = document.getElementById('cv');
+    
+    if (landingView && cvView) {
+      landingView.style.display = 'none';
+      cvView.classList.add('active');
+    }
+    
+    // Update URL without triggering hashchange event
+    if (window.location.hash !== '#' + companyKey) {
+      try {
+        history.pushState({ company: companyKey }, '', '#' + companyKey);
+      } catch (error) {
+        console.warn('History push failed:', error);
+      }
+    }
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+    
+    console.log('CV view shown for:', company.name);
+  } catch (error) {
+    console.error('Error showing CV view:', error);
+    // Fallback to landing view
+    showLandingView();
+  } finally {
+    // Hide loading state
+    setTimeout(() => {
+      const loader = document.getElementById('loadingIndicator');
+      if (loader) loader.classList.remove('active');
+      isTransitioning = false;
+    }, 150);
   }
-  
-  // Scroll to top
-  window.scrollTo(0, 0);
-  
-  // Hide loading state
-  setTimeout(() => {
-    if (loader) loader.classList.remove('active');
-    isTransitioning = false;
-  }, 150);
 }
 
 // Show landing view
@@ -1567,20 +1637,43 @@ function showLandingView() {
   history.pushState({ view: 'landing' }, '', window.location.pathname);
 }
 
-// Apply company theme
+// Apply company theme with validation
 function applyTheme(accentColor) {
-  document.documentElement.style.setProperty('--accent', accentColor);
-  document.documentElement.style.setProperty('--accent-dim', accentColor + '15');
-  document.documentElement.style.setProperty('--accent-glow', accentColor + '30');
+  // Validate color format
+  const isValidColor = /^#[0-9A-F]{6}$/i.test(accentColor);
+  if (!isValidColor) {
+    console.warn('Invalid accent color, using default:', accentColor);
+    resetTheme();
+    return;
+  }
   
-  // Calculate secondary color (complementary)
-  const hex = accentColor.replace('#', '');
-  const r = parseInt(hex.substr(0, 2), 16);
-  const g = parseInt(hex.substr(2, 2), 16);
-  const b = parseInt(hex.substr(4, 2), 16);
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  const secondary = brightness > 128 ? '#00b8d4' : '#ff9f43';
-  document.documentElement.style.setProperty('--accent-secondary', secondary);
+  try {
+    document.documentElement.style.setProperty('--accent', accentColor);
+    
+    // Calculate dimmed and glow variants
+    const dimColor = accentColor + '15'; // 9% opacity
+    const glowColor = accentColor + '30'; // 18% opacity
+    
+    document.documentElement.style.setProperty('--accent-dim', dimColor);
+    document.documentElement.style.setProperty('--accent-glow', glowColor);
+    
+    // Calculate secondary color (complementary) with better algorithm
+    const hex = accentColor.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    const hue = Math.atan2(Math.sqrt(3) * (g - b), 2 * r - g - b) * 180 / Math.PI;
+    const adjustedHue = (hue + 180) % 360;
+    
+    // Choose secondary based on brightness and hue rotation
+    const secondary = brightness > 128 ? '#00b8d4' : '#ff9f43';
+    document.documentElement.style.setProperty('--accent-secondary', secondary);
+  } catch (error) {
+    console.error('Error applying theme:', error);
+    resetTheme();
+  }
 }
 
 // Reset theme to default
@@ -1591,52 +1684,93 @@ function resetTheme() {
   document.documentElement.style.setProperty('--accent-secondary', '#00b8d4');
 }
 
-// Render skills in priority order
+// Render skills in priority order with validation
 function renderSkills(priority) {
   const grid = document.getElementById('skillsGrid');
-  
-  // Get skills by category
-  const securitySkills = priority.filter(s => allSkills[s]?.category === 'Security');
-  const engineeringSkills = priority.filter(s => allSkills[s]?.category === 'Engineering');
-  const leadershipSkills = priority.filter(s => allSkills[s]?.category === 'Leadership');
-  
-  // Build skill cards
-  let html = '';
-  
-  if (securitySkills.length > 0) {
-    html += `
-      <div class="skill-card">
-        <div class="skill-card-title">Security</div>
-        <div class="skill-tags">
-          ${securitySkills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
-        </div>
-      </div>
-    `;
+  if (!grid) {
+    console.error('Skills grid element not found');
+    return;
   }
   
-  if (engineeringSkills.length > 0) {
-    html += `
-      <div class="skill-card">
-        <div class="skill-card-title">Engineering</div>
-        <div class="skill-tags">
-          ${engineeringSkills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
-        </div>
-      </div>
-    `;
+  // Validate priority array
+  if (!Array.isArray(priority) || priority.length === 0) {
+    console.warn('Invalid or empty priority array, using default skills');
+    priority = ['Security', 'Engineering', 'Leadership'].flatMap(cat => 
+      Object.entries(allSkills)
+        .filter(([_, data]) => data.category === cat)
+        .map(([skill]) => skill)
+    ).slice(0, 6); // Limit to 6 skills
   }
   
-  if (leadershipSkills.length > 0) {
-    html += `
-      <div class="skill-card">
-        <div class="skill-card-title">Leadership</div>
-        <div class="skill-tags">
-          ${leadershipSkills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+  try {
+    // Get skills by category with validation
+    const securitySkills = priority
+      .filter(s => s && allSkills[s]?.category === 'Security')
+      .filter(val => val); // Remove any falsy values
+    
+    const engineeringSkills = priority
+      .filter(s => s && allSkills[s]?.category === 'Engineering')
+      .filter(val => val);
+    
+    const leadershipSkills = priority
+      .filter(s => s && allSkills[s]?.category === 'Leadership')
+      .filter(val => val);
+    
+    // Build skill cards with fallbacks
+    let html = '';
+    
+    if (securitySkills.length > 0) {
+      html += `
+        <div class="skill-card">
+          <div class="skill-card-title">Security</div>
+          <div class="skill-tags">
+            ${securitySkills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
+    
+    if (engineeringSkills.length > 0) {
+      html += `
+        <div class="skill-card">
+          <div class="skill-card-title">Engineering</div>
+          <div class="skill-tags">
+            ${engineeringSkills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    if (leadershipSkills.length > 0) {
+      html += `
+        <div class="skill-card">
+          <div class="skill-card-title">Leadership</div>
+          <div class="skill-tags">
+            ${leadershipSkills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    // If no skills found, show placeholder
+    if (!html.trim()) {
+      html = `
+        <div class="skill-card">
+          <div class="skill-card-title">Skills</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Security Research</span>
+            <span class="skill-tag">Engineering</span>
+            <span class="skill-tag">Leadership</span>
+          </div>
+        </div>
+      `;
+    }
+    
+    grid.innerHTML = html;
+  } catch (error) {
+    console.error('Error rendering skills:', error);
+    grid.innerHTML = '<div class="skill-card"><div class="skill-card-title">Skills</div><div class="skill-tags">Error loading skills</div></div>';
   }
-  
-  grid.innerHTML = html;
 }
 
 // Handle hash changes
