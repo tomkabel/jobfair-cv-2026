@@ -1,0 +1,169 @@
+CURRICULUM VITAE
+
+Tom Kristian Abel
+Founder & Principal Security Consultant at ProksiAbel OÜ — CTO at MatX.ee
+tomkristianabel@gmail.com
+
+linkedin.com/in/hr-abel
+
+Estonia
+
+About
+
+01
+
+Security researcher turned CTO. I started as a developer building systems before realizing it's a lot more fun to break them. My approach is
+architectural — I go after root causes, not individual vulnerabilities. That mindset won my team first place at the FELLIN HÄKK 2026
+hackathon. I work with engineering leaders who are done with security theater and want to actually harden their stack. Founder of ProksiAbel
+OÜ, now leading technology at MatX.ee.
+
+02
+
+Experience
+
+Chief Technology Officer
+
+Feb 2026 — Present
+
+MatX.ee
+Estonia
+FELLIN HÄKK 2026 Main Winning Team
+
+Founder & Principal Security Researcher
+
+Jun 2024 — Present
+
+ProksiAbel OÜ
+
+›
+
+Spearheading high-impact cybersecurity research and offensive security consulting
+
+›
+
+Enforcing robust protection protocols — turning weak code into hardened fortresses
+
+›
+
+Building tools that counter next-generation social engineering attacks
+
+Independent Security Researcher
+
+Jun 2021 — Present
+
+Self-employed
+
+›
+
+Pioneered offensive research methodologies and engineered novel attack vectors with custom analysis techniques
+
+›
+
+Reverse-engineered complex JavaScript architectures, deconstructing obfuscated logic to uncover critical vulnerabilities
+
+›
+
+Architected a Proof-of-Concept that bypassed a major platform's client-side bot detection and fingerprinting systems
+
+›
+
+Built high-performance offensive tooling in Golang with concurrent frameworks for automated reconnaissance
+
+Software Developer
+Smaily — Email Marketing & Automation
+Tallinn, Estonia
+
+›
+
+Owned the development of integration plugins for popular platforms, driving user engagement and retention
+
+›
+
+Implemented critical bug fixes across the plugin portfolio ensuring high performance and reliability
+
+›
+
+Collaborated with product and support teams to deliver elegant solutions meeting client needs
+
+Sep 2019 — May 2021
+
+Expertise
+
+03
+
+SECURITY
+
+ENGINEERING
+
+Offensive Security
+
+Penetration Testing
+
+Reverse Engineering
+
+Vulnerability Research
+
+Bot Detection Bypass
+
+Social Engineering
+
+Golang
+
+JavaScript
+
+Performance Tuning
+
+DevOps
+
+Database Optimization
+
+Concurrent Systems
+
+LEADERSHIP
+
+CTO
+
+Security Architecture
+
+Research & Development
+
+04
+
+Technical Strategy
+
+Team Building
+
+Education
+
+Software Engineering Program
+
+2026 — 2027
+
+kood/Jõhvi
+
+Micro-degree — Software Engineering: Junior to Senior Developer
+
+Jan 2026 — May 2026
+
+TalTech — Tallinn University of Technology
+
+Software Developer
+
+2017 — 2020
+
+Tallinn Polytechnic School
+
+05
+
+Estonian
+
+Languages
+Native
+
+English
+
+Professional
+
+Generated March 2026 — tomkristianabel@gmail.com
+
+

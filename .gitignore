@@ -1,0 +1,4 @@
+# Test file
+test-spa.py
+*.pyc
+__pycache__/

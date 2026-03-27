@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFair Pitches</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a2e; color: #eee; line-height: 1.5; padding-bottom: 80px; }
+        .header { background: #16213e; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #0f3460; }
+        .header h1 { font-size: 1.2rem; color: #e94560; }
+        .search-box { margin-top: 10px; }
+        .search-box input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #0f3460; background: #0f3460; color: #fff; font-size: 16px; }
+        .nav { display: flex; gap: 5px; overflow-x: auto; padding: 10px 20px; background: #16213e; }
+        .nav-btn { padding: 8px 16px; background: #0f3460; border: none; border-radius: 20px; color: #aaa; font-size: 0.85rem; white-space: nowrap; cursor: pointer; transition: all 0.2s; }
+        .nav-btn.active { background: #e94560; color: #fff; }
+        .nav-btn:hover { background: #0f3460; }
+        .pitch-card { margin: 15px 20px; padding: 20px; background: #16213e; border-radius: 12px; border-left: 4px solid #e94560; }
+        .pitch-card h2 { font-size: 1.1rem; margin-bottom: 15px; color: #e94560; }
+        .section { margin-bottom: 12px; }
+        .section-label { font-size: 0.7rem; text-transform: uppercase; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
+        .section-content { font-size: 0.95rem; color: #ddd; }
+        .company-tag { display: inline-block; padding: 4px 10px; background: #0f3460; border-radius: 4px; font-size: 0.75rem; margin-right: 5px; margin-bottom: 5px; }
+        .priority-high { border-left-color: #e94560; }
+        .priority-medium { border-left-color: #f39c12; }
+        .priority-low { border-left-color: #27ae60; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JobFair 2026 Pitches</h1>
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search company or keyword..." onkeyup="filterPitches()">
+        </div>
+    </div>
+    <div class="nav" id="nav">
+        <button class="nav-btn active" onclick="showAll()">All</button>
+        <button class="nav-btn" onclick="showPriority(1)">🔥 Hot</button>
+        <button class="nav-btn" onclick="showCompany('Helmes')">Helmes</button>
+        <button class="nav-btn" onclick="showCompany('Swedbank')">Swedbank</button>
+        <button class="nav-btn" onclick="showCompany('Bolt')">Bolt</button>
+        <button class="nav-btn" onclick="showCompany('SMIT')">SMIT</button>
+        <button class="nav-btn" onclick="showCompany('SEB')">SEB</button>
+        <button class="nav-btn" onclick="showCompany('Pactum')">Pactum</button>
+        <button class="nav-btn" onclick="showCompany('REMITK')">REMITK</button>
+    </div>
+
+    <!-- HELMES - Priority 1 -->
+    <div class="pitch-card priority-high company-Helmes" data-company="Helmes">
+        <h2>Helmes — Cybersecurity Internship</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher and CTO.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do penetration testing and vulnerability research. Native Estonian speaker.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">Your Security Lead model — security embedded in every team — that's exactly how security should work.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What kind of projects would an intern work on?</div>
+        </div>
+    </div>
+
+    <!-- SWEDBANK - Priority 1 -->
+    <div class="pitch-card priority-high company-Swedbank" data-company="Swedbank">
+        <h2>Swedbank — Kick Start Program</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher with offensive security consulting experience.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (15s)</div>
+            <div class="section-content">I do penetration testing, vulnerability research, and build security tooling in Go. I'm also a TalTech microdegree student.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (12s)</div>
+            <div class="section-content">The Kick Start program caught my eye — I'm interested in how security roles fit into your Azure migration and DevSecOps pipeline.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What's the biggest security challenge your team is facing right now?</div>
+        </div>
+    </div>
+
+    <!-- BOLT - Priority 2 -->
+    <div class="pitch-card priority-high company-Bolt" data-company="Bolt">
+        <h2>Bolt — Summer Internship</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher and CTO at MatX.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (15s)</div>
+            <div class="section-content">I specialize in offensive security, IoT penetration testing, and building high-throughput systems in Go. My team won FELLIN HÄKK 2026.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (12s)</div>
+            <div class="section-content">I noticed Bolt is scaling AI across e-scooter IoT and autonomous vehicles — that's exactly the attack surface I want to work on.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">I'd love to hear which security team would be the best fit — platform, product, or internal?</div>
+        </div>
+    </div>
+
+    <!-- SMIT - Priority 2 -->
+    <div class="pitch-card priority-medium company-SMIT" data-company="SMIT">
+        <h2>SMIT — Ministry of Interior</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher, native Estonian.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do penetration testing and think about how systems actually break. Winner at FELLIN HÄKK.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">Public sector IT is where security has the highest stakes — protecting people, not revenue.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What does the internship pathway look like? Is there potential for long-term work?</div>
+        </div>
+    </div>
+
+    <!-- SEB - Priority 2 -->
+    <div class="pitch-card priority-medium company-SEB" data-company="SEB">
+        <h2>SEB — Youth LAB / Development LAB</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher and developer.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do pen testing, vulnerability research, and build Go tooling. Production API experience.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">International banking with expanding APIs — every new feature is a new attack vector. That's the reality I want to work in.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What's the team structure for cybersecurity?</div>
+        </div>
+    </div>
+
+    <!-- PACTUM AI - Priority 2 -->
+    <div class="pitch-card priority-medium company-Pactum" data-company="Pactum">
+        <h2>Pactum AI — Senior Engineer</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher focused on AI safety.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do vulnerability research and build offensive tooling. I think about adversarial inputs and system failure modes.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">AI agents with real financial authority need security that doesn't have textbook answers — that's the problem I want to solve.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">How does security review work when AI generates your production code?</div>
+        </div>
+    </div>
+
+    <!-- REMITK - Priority 3 -->
+    <div class="pitch-card priority-low company-REMITK" data-company="REMITK">
+        <h2>REMITK — State IT Centre</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Tere, ma olen Tom — turbeuurija.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">Tee läbi pentestimist ja haavatavusuurimist. Eesti keel on emakeel.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">REMITK loob turbekultuuri nullist — see on võimalus, mida teised riigid alles unistavad.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">Millisesse meeskonda sobiks noor turbespetsialist?</div>
+        </div>
+    </div>
+
+    <!-- DELFI MEEDIA - Priority 3 -->
+    <div class="pitch-card priority-low company-Delfi" data-company="Delfi">
+        <h2>Delfi Meedia — Technical Challenge</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher and developer.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do penetration testing, reverse engineering, and build production APIs. Winner at FELLIN HÄKK 2026.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">110 million page views with AI translation — that's a security scope that gets ignored until something breaks.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What's the security team structure like? Is there room for someone with an offensive background?</div>
+        </div>
+    </div>
+
+    <!-- ERICSSON - Priority 3 -->
+    <div class="pitch-card priority-low company-Ericsson" data-company="Ericsson">
+        <h2>Ericsson — 5G Infrastructure</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do offensive security and infrastructure security. Currently at kood/Jõhvi.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">5G infrastructure — one vulnerability isn't a breach, it's a blackout. That's the scale I want.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What does the Tallinn team work on specifically?</div>
+        </div>
+    </div>
+
+    <!-- FINEST - Priority 3 -->
+    <div class="pitch-card priority-low company-Finest" data-company="Finest">
+        <h2>Finest — Software Development</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher and developer.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do penetration testing and build production systems. Looking to grow in security.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (8s)</div>
+            <div class="section-content">Your high conversion rate from intern to full-time — that's what I'm looking for.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (7s)</div>
+            <div class="section-content">What's the team like? Remote or office?</div>
+        </div>
+    </div>
+
+    <!-- GENIUS SPORTS - Priority 3 -->
+    <div class="pitch-card priority-low company-Genius" data-company="Genius">
+        <h2>Genius Sports — Data Integrity</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I specialize in offensive security and infrastructure. I think about data integrity the way an attacker does.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">240,000 events with sub-second data — if a single point is tampered with, the whole system fails. That's compelling.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">Is the Tallinn office hiring for DevSecOps or more traditional security roles?</div>
+        </div>
+    </div>
+
+    <!-- //KOOD - Priority 3 -->
+    <div class="pitch-card priority-low company-Kood" data-company="Kood">
+        <h2>//kood — Community Contribution</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — one of your students.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (10s)</div>
+            <div class="section-content">Security researcher. I built ProksiAbel and won FELLIN HÄKK.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">I want to give back — security should be part of the DNA here, not an afterthought.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (7s)</div>
+            <div class="section-content">What's the best way to contribute?</div>
+        </div>
+    </div>
+
+    <!-- IDA HUB - Priority 3 -->
+    <div class="pitch-card priority-low company-IDA" data-company="IDA">
+        <h2>IDA Hub — Regional Tech</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher at kood/Jõhvi.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (10s)</div>
+            <div class="section-content">Offensive security consulting. I want to build the local ecosystem.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">Everyone goes to Tallinn. I'm already here — let's build security culture in Ida-Virumaa.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (7s)</div>
+            <div class="section-content">How can I help?</div>
+        </div>
+    </div>
+
+    <!-- VKG - Priority 3 -->
+    <div class="pitch-card priority-low company-VKG" data-company="VKG">
+        <h2>VKG — Industrial Security</h2>
+        <div class="section">
+            <div class="section-label">WHO (8s)</div>
+            <div class="section-content">Hi, I'm Tom — security researcher.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">SKILLS (12s)</div>
+            <div class="section-content">I do penetration testing. I think about how IT and OT systems intersect.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">CONNECTION (10s)</div>
+            <div class="section-content">Industrial operations going digital — when systems fail, it's not lost sales, it's safety. That's the consequence I want.</div>
+        </div>
+        <div class="section">
+            <div class="section-label">ASK (10s)</div>
+            <div class="section-content">What's your digital transformation roadmap look like?</div>
+        </div>
+    </div>
+
+    <script>
+        function showAll() {
+            document.querySelectorAll('.pitch-card').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function showPriority(priority) {
+            document.querySelectorAll('.pitch-card').forEach(el => el.classList.add('hidden'));
+            const priorityClass = priority === 1 ? '.priority-high' : '.priority-medium';
+            document.querySelectorAll(priorityClass).forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function showCompany(company) {
+            document.querySelectorAll('.pitch-card').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.company-' + company).forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function filterPitches() {
+            const query = document.getElementById('search').value.toLowerCase();
+            document.querySelectorAll('.pitch-card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

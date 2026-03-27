@@ -1,0 +1,10 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "permission": {
+    "*": "allow",
+    "external_directory": {
+      "/home/notroot/Documents/Curriculum-Vitae/*": "allow"
+    }
+  },
+  "mcp": {}
+}
