@@ -3,40 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobFair Pitches</title>
+    <title>Tom Kristian Abel — JobFair 2026 Pitches</title>
+    <meta name="description" content="Interactive pitch cards for JobFair 2026 companies - Security Researcher & CTO Tom Kristian Abel">
+    <meta name="author" content="Tom Kristian Abel">
+    <meta name="theme-color" content="#00e5a0">
+    
+    <!-- Unified design system matching index.html -->
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg-primary: #0d0d1a;
-            --bg-secondary: #16213e;
-            --bg-card: #1a1a2e;
-            --accent: #e94560;
-            --accent-high: #e94560;
+            --bg-primary: #09090b;
+            --bg-secondary: #111113;
+            --bg-card: #16161a;
+            --bg-card-hover: #1c1c21;
+            --border: #1e1e24;
+            --border-accent: #2a2a32;
+            --text-primary: #e8e6e3;
+            --text-secondary: #9896a1;
+            --text-muted: #5e5c66;
+            --accent: #00e5a0;
+            --accent-dim: #00e5a015;
+            --accent-glow: #00e5a030;
+            --accent-high: #ff6b6b;
             --accent-medium: #f39c12;
             --accent-low: #27ae60;
-            --text-primary: #eee;
-            --text-secondary: #aaa;
-            --border: #0f3460;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
+        
+        /* Font loading optimization */
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@300;400;500&display=swap');
         
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            font-family: var(--font-body); 
             background: var(--bg-primary); 
             color: var(--text-primary); 
-            line-height: 1.6; 
-            padding-bottom: 100px;
+            line-height: 1.6;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
         
-        /* Main container - centered with elegant max-width */
+        /* Grid background for consistency with CV */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Main container */
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 80px;
         }
         
-        /* Header styling */
+        /* Header */
         .header { 
             background: var(--bg-secondary); 
             padding: 24px 0; 
@@ -45,46 +80,61 @@
             z-index: 100; 
             border-bottom: 1px solid var(--border);
             margin-bottom: 32px;
+            backdrop-filter: blur(10px);
         }
         
         .header .container {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
         
         .header h1 { 
             font-size: 1.5rem; 
             color: var(--accent); 
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
-        .search-box { }
+        .header h1::before {
+            content: '📋';
+            font-size: 1.2rem;
+        }
+        
+        .search-box { width: 100%; }
         .search-box input { 
             width: 100%; 
             padding: 14px 18px; 
-            border-radius: 10px; 
+            border-radius: 8px; 
             border: 1px solid var(--border); 
             background: var(--bg-card); 
             color: var(--text-primary); 
             font-size: 15px;
-            transition: border-color 0.2s;
+            font-family: var(--font-body);
+            transition: all 0.2s ease;
         }
         .search-box input:focus {
             outline: none;
             border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+        .search-box input::placeholder {
+            color: var(--text-muted);
         }
         
-        /* Navigation - horizontal scroll on mobile, grid on desktop */
+        /* Navigation */
         .nav { 
             display: flex; 
             gap: 8px; 
             overflow-x: auto; 
-            padding: 12px 0; 
+            padding: 16px 0; 
             background: var(--bg-primary);
             margin-bottom: 24px;
             scrollbar-width: none;
+            border-bottom: 1px solid var(--border);
         }
         .nav::-webkit-scrollbar { display: none; }
         
@@ -95,35 +145,60 @@
             border-radius: 24px; 
             color: var(--text-secondary); 
             font-size: 0.85rem; 
+            font-family: var(--font-mono);
+            font-weight: 500;
             white-space: nowrap; 
             cursor: pointer; 
-            transition: all 0.2s; 
+            transition: all 0.2s ease; 
             flex-shrink: 0;
+            letter-spacing: 0.05em;
         }
         .nav-btn.active { 
             background: var(--accent); 
-            color: #fff; 
+            color: var(--bg-primary); 
             border-color: var(--accent);
+            font-weight: 600;
         }
         .nav-btn:hover:not(.active) { 
-            background: var(--bg-secondary);
+            background: var(--bg-card-hover);
             border-color: var(--accent);
             color: var(--text-primary);
         }
         
-        /* Pitch cards - proper card styling */
+        /* Pitch cards */
         .pitch-card { 
             margin-bottom: 20px; 
             padding: 28px; 
             background: var(--bg-card); 
-            border-radius: 16px; 
+            border-radius: 12px; 
             border: 1px solid var(--border);
-            border-left: 4px solid var(--accent-high);
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+        .pitch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--priority-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
         .pitch-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow);
+            border-color: var(--border-accent);
+            background: var(--bg-card-hover);
+        }
+        
+        .pitch-card:hover::before {
+            transform: scaleX(1);
         }
         
         .pitch-card h2 { 
@@ -131,17 +206,26 @@
             margin-bottom: 20px; 
             color: var(--accent); 
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .pitch-card h2::before {
+            content: '🏢';
+            font-size: 1.1rem;
         }
         
         .section { 
-            margin-bottom: 16px; 
+            margin-bottom: 20px; 
         }
         .section-label { 
+            font-family: var(--font-mono);
             font-size: 0.7rem; 
             text-transform: uppercase; 
-            color: var(--text-secondary); 
+            color: var(--text-muted); 
             letter-spacing: 1.5px; 
-            margin-bottom: 6px; 
+            margin-bottom: 8px; 
             font-weight: 500;
         }
         .section-content { 
@@ -150,26 +234,79 @@
             line-height: 1.7;
         }
         
-        .company-tag { 
-            display: inline-block; 
-            padding: 5px 12px; 
-            background: var(--bg-secondary); 
-            border-radius: 6px; 
-            font-size: 0.75rem; 
-            margin-right: 6px; 
-            margin-bottom: 6px;
-            color: var(--text-secondary);
+        .priority-badge {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-weight: 600;
         }
         
-        .priority-high { border-left-color: var(--accent-high); }
-        .priority-medium { border-left-color: var(--accent-medium); }
-        .priority-low { border-left-color: var(--accent-low); }
-        .hidden { display: none; }
+        .priority-high { 
+            --priority-accent: var(--accent-high);
+            border-left-color: var(--accent-high);
+        }
+        .priority-high .priority-badge {
+            background: var(--accent-high);
+            color: var(--bg-primary);
+        }
         
-        /* Desktop optimizations */
+        .priority-medium { 
+            --priority-accent: var(--accent-medium);
+            border-left-color: var(--accent-medium);
+        }
+        .priority-medium .priority-badge {
+            background: var(--accent-medium);
+            color: var(--bg-primary);
+        }
+        
+        .priority-low { 
+            --priority-accent: var(--accent-low);
+            border-left-color: var(--accent-low);
+        }
+        .priority-low .priority-badge {
+            background: var(--accent-low);
+            color: var(--bg-primary);
+        }
+        
+        .hidden { 
+            display: none; 
+            animation: fadeOut 0.2s ease;
+        }
+        
+        /* Animations */
+        .pitch-card {
+            animation: fadeInUp 0.4s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes fadeOut {
+            from { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+            to { 
+                opacity: 0; 
+                transform: translateY(-10px); 
+            }
+        }
+        
+        /* Enhanced desktop */
         @media (min-width: 768px) {
             .container {
-                max-width: 780px;
                 padding: 0 32px;
             }
             
@@ -184,13 +321,15 @@
             }
             
             .search-box {
-                width: 320px;
+                width: 360px;
             }
             
             .nav {
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 16px 0;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+                padding: 20px 0;
+                overflow-x: visible;
             }
             
             .pitch-card {
@@ -206,14 +345,48 @@
             }
         }
         
-        /* Smooth animations */
-        .pitch-card {
-            animation: fadeIn 0.3s ease;
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .header {
+                padding: 20px 0;
+            }
+            
+            .pitch-card {
+                margin-bottom: 16px;
+                padding: 24px 20px;
+            }
+            
+            .pitch-card h2 {
+                font-size: 1.1rem;
+                margin-bottom: 16px;
+            }
+            
+            .section {
+                margin-bottom: 16px;
+            }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: more) {
+            .pitch-card {
+                border-width: 2px;
+            }
+            .nav-btn:focus-visible, .pitch-card:focus-visible {
+                outline: 2px solid var(--accent);
+            }
         }
     </style>
 </head>
@@ -231,6 +404,7 @@
         <div class="nav" id="nav">
         <button class="nav-btn active" onclick="showAll()">All</button>
         <button class="nav-btn" onclick="showPriority(1)">🔥 Hot</button>
+        <button class="nav-btn" onclick="showPriority(2)">⚡ Medium</button>
         <button class="nav-btn" onclick="showCompany('Helmes')">Helmes</button>
         <button class="nav-btn" onclick="showCompany('Swedbank')">Swedbank</button>
         <button class="nav-btn" onclick="showCompany('Bolt')">Bolt</button>
@@ -238,6 +412,13 @@
         <button class="nav-btn" onclick="showCompany('SEB')">SEB</button>
         <button class="nav-btn" onclick="showCompany('Pactum')">Pactum</button>
         <button class="nav-btn" onclick="showCompany('REMITK')">REMITK</button>
+        <button class="nav-btn" onclick="showCompany('Delfi')">Delfi Meedia</button>
+        <button class="nav-btn" onclick="showCompany('Ericsson')">Ericsson</button>
+        <button class="nav-btn" onclick="showCompany('Finest')">Finest</button>
+        <button class="nav-btn" onclick="showCompany('Genius')">Genius Sports</button>
+        <button class="nav-btn" onclick="showCompany('Kood')">//kood</button>
+        <button class="nav-btn" onclick="showCompany('IDA')">IDA Hub</button>
+        <button class="nav-btn" onclick="showCompany('VKG')">VKG</button>
     </div>
 
     <!-- HELMES - Priority 1 -->
@@ -258,6 +439,10 @@
         <div class="section">
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What kind of projects would an intern work on?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">How do Security Leads collaborate across your 25 autonomous teams? • Your ISO 27001 certified security process is impressive — how is it embedded beyond compliance assessments? • The Keyfactor PKI work involved Common Criteria certification — is that kind of regulated-environment security work common?</div>
         </div>
     </div>
 
@@ -280,6 +465,10 @@
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What's the biggest security challenge your team is facing right now?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Your Azure migration — what were the security architecture challenges moving one of Europe's largest SIEM platforms to cloud? • How are you implementing DevSecOps within Azure DevOps CI/CD? • With PSD2 expanding API surfaces, what's your approach to API security?</div>
+        </div>
     </div>
 
     <!-- BOLT - Priority 2 -->
@@ -300,6 +489,10 @@
         <div class="section">
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">I'd love to hear which security team would be the best fit — platform, product, or internal?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">How does security integrate with your autonomous vehicle partnerships with NVIDIA and Pony.ai? • Your BACA AI coding agents generate production code — how does security review work for AI-generated code? • IoT fleet security (MQTT on e-scooters) is a unique niche — how mature is that program?</div>
         </div>
     </div>
 
@@ -322,6 +515,10 @@
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What does the internship pathway look like? Is there potential for long-term work?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Your PrivX PAM deployment — how mature is zero-trust across legacy and cloud systems? • The Guardtime blockchain audit partnership — how is it used day-to-day for system integrity? • With NIS2 compliance, how is security integrated into development lifecycles?</div>
+        </div>
     </div>
 
     <!-- SEB - Priority 2 -->
@@ -342,6 +539,10 @@
         <div class="section">
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What's the team structure for cybersecurity?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">How does security work within the Tribes model — is it embedded in each Tribe or a central function? • Container security with Kubernetes/OpenShift — what frameworks do you use? • Your AI Engineer role in Finance Risk & Data Tribe — how is ML used for fraud detection?</div>
         </div>
     </div>
 
@@ -364,6 +565,10 @@
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">How does security review work when AI generates your production code?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Your AI agents handle $140M+ deals — how do you engineer for catastrophic mistake risk? • The Requisition Alignment Agent just launched — is the platform heading toward fully autonomous procurement? • With 10 former startup CTOs on the team, what's the engineering culture like?</div>
+        </div>
     </div>
 
     <!-- REMITK - Priority 3 -->
@@ -384,6 +589,10 @@
         <div class="section">
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">Millisesse meeskonda sobiks noor turbespetsialist?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Kuidas IT konsolideerimine 5 asutuse vahel mõjutab turbepraktikaid? • Kuidas ISO 27001 sertifitseerimine integreerub arendustsüklisse? • X-tee andmevahetuse turvalisus — kuidas lahendate turvanõrkused liidestepunktides?</div>
         </div>
     </div>
 
@@ -406,6 +615,10 @@
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What's the security team structure like? Is there room for someone with an offensive background?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">How do you handle security boundaries in the micro-frontend architecture across 20+ portals? • Your internal AI chatbot for data querying — what measures prevent data leakage? • Content integrity in the age of AI — how do you defend against misinformation and content injection?</div>
+        </div>
     </div>
 
     <!-- ERICSSON - Priority 3 -->
@@ -426,6 +639,10 @@
         <div class="section">
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What does the Tallinn team work on specifically?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">The OT Security Lead role — what are the biggest OT challenges in your 5G smart factory? • Estonia's NATO context — how does proximity to Russia affect infrastructure security thinking? • Your joint PQC research with AT&amp;T — how is that being implemented in Tallinn's manufacturing?</div>
         </div>
     </div>
 
@@ -448,6 +665,10 @@
             <div class="section-label">ASK (7s)</div>
             <div class="section-content">What's the team like? Remote or office?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Your e-state systems like DigiDoc and 112 — how do you approach security for nationally critical infrastructure? • ISO 27001 implementation — how does it affect daily development practices? • The Maksekeskus payment platform — what PCI compliance challenges did you face?</div>
+        </div>
     </div>
 
     <!-- GENIUS SPORTS - Priority 3 -->
@@ -468,6 +689,10 @@
         <div class="section">
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">Is the Tallinn office hiring for DevSecOps or more traditional security roles?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Container security with Kubernetes at scale — what pod security policies do you use? • With data integrity partnerships across leagues, how do you engineer for tamper-proof systems? • The Legend acquisition — how does that change security priorities and attack surface?</div>
         </div>
     </div>
 
@@ -490,6 +715,10 @@
             <div class="section-label">ASK (7s)</div>
             <div class="section-content">What's the best way to contribute?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">How can security practices be integrated into //kood's peer-learning curriculum? • With Martin Villig present — how can his security experiences inform //kood's approach? • Cybersecurity specialisation — what additional resources could benefit students?</div>
+        </div>
     </div>
 
     <!-- IDA HUB - Priority 3 -->
@@ -510,6 +739,10 @@
         <div class="section">
             <div class="section-label">ASK (7s)</div>
             <div class="section-content">How can I help?</div>
+        </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Your Film & AI accelerator startups — how do they handle data security and privacy? • The Jõhvi Film Campus development — what cybersecurity considerations are there for the studio complex? • With the President's recent visit — are you looking for tech/security roles?</div>
         </div>
     </div>
 
@@ -532,43 +765,229 @@
             <div class="section-label">ASK (10s)</div>
             <div class="section-content">What's your digital transformation roadmap look like?</div>
         </div>
+        <div class="section">
+            <div class="section-label">RESEARCH-BASED QUESTIONS</div>
+            <div class="section-content">Your SCADA network security upgrades — what frameworks and monitoring solutions are you using? • IT/OT convergence — how are you integrating legacy industrial systems with modern IT security? • The €1.3B VKG Fiber project — what security considerations are planned for the bioproducts complex?</div>
+        </div>
     </div>
 
     </div>
     
     <script>
-        function showAll() {
-            document.querySelectorAll('.pitch-card').forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
+        // State management
+        const state = {
+            currentFilter: 'all',
+            searchQuery: ''
+        };
+        
+        // DOM ready handler
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('JobFair Pitches initialized');
+            
+            // Set initial active state
+            highlightActiveFilter();
+            
+            // Add keyboard navigation for accessibility
+            initKeyboardNavigation();
+        });
+        
+        // Enhanced error handling and validation
+        function validateEventTarget(event) {
+            if (!event || !event.target) {
+                console.warn('Invalid event object');
+                return null;
+            }
+            return event.target;
+        }
+        
+        function showAll(event = null) {
+            const target = event ? validateEventTarget(event) : document.querySelector('.nav-btn');
+            
+            // Update state
+            state.currentFilter = 'all';
+            
+            // Apply filter
+            document.querySelectorAll('.pitch-card').forEach(card => {
+                card.classList.remove('hidden');
+                if (state.searchQuery) {
+                    const text = card.textContent.toLowerCase();
+                    if (!text.includes(state.searchQuery.toLowerCase())) {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+            
+            // Update UI
+            highlightActiveFilter(target);
+            trackFilterChange('showAll');
         }
 
-        function showPriority(priority) {
-            document.querySelectorAll('.pitch-card').forEach(el => el.classList.add('hidden'));
-            const priorityClass = priority === 1 ? '.priority-high' : '.priority-medium';
-            document.querySelectorAll(priorityClass).forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
+        function showPriority(priority, event = null) {
+            const target = event ? validateEventTarget(event) : null;
+            
+            // Validation
+            if (![1, 2, 3].includes(priority)) {
+                console.error('Invalid priority level:', priority);
+                return;
+            }
+            
+            // Update state
+            state.currentFilter = `priority-${priority}`;
+            
+            // Determine priority class
+            const priorityClass = priority === 1 ? '.priority-high' : 
+                                priority === 2 ? '.priority-medium' : '.priority-low';
+            
+            // Apply filter
+            document.querySelectorAll('.pitch-card').forEach(card => {
+                card.classList.add('hidden');
+            });
+            
+            document.querySelectorAll(priorityClass).forEach(card => {
+                if (!state.searchQuery || card.textContent.toLowerCase().includes(state.searchQuery.toLowerCase())) {
+                    card.classList.remove('hidden');
+                }
+            });
+            
+            // Update UI
+            highlightActiveFilter(target);
+            trackFilterChange(`showPriority-${priority}`);
         }
 
-        function showCompany(company) {
-            document.querySelectorAll('.pitch-card').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.company-' + company).forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
+        function showCompany(company, event = null) {
+            const target = event ? validateEventTarget(event) : null;
+            
+            // Validation
+            if (typeof company !== 'string' || !company.trim()) {
+                console.error('Invalid company parameter:', company);
+                return;
+            }
+            
+            // Sanitize company name
+            const sanitizedCompany = company.replace(/[^a-zA-Z0-9-]/g, '');
+            const companyClass = '.company-' + sanitizedCompany;
+            
+            // Check if company exists
+            const companyCards = document.querySelectorAll(companyClass);
+            if (companyCards.length === 0) {
+                console.warn('No cards found for company:', company);
+                showAll(event);
+                return;
+            }
+            
+            // Update state
+            state.currentFilter = `company-${sanitizedCompany}`;
+            
+            // Apply filter
+            document.querySelectorAll('.pitch-card').forEach(card => {
+                card.classList.add('hidden');
+            });
+            
+            companyCards.forEach(card => {
+                if (!state.searchQuery || card.textContent.toLowerCase().includes(state.searchQuery.toLowerCase())) {
+                    card.classList.remove('hidden');
+                }
+            });
+            
+            // Update UI
+            highlightActiveFilter(target);
+            trackFilterChange(`showCompany-${sanitizedCompany}`);
         }
 
         function filterPitches() {
-            const query = document.getElementById('search').value.toLowerCase();
-            document.querySelectorAll('.pitch-card').forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(query)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
+            const searchInput = document.getElementById('search');
+            if (!searchInput) return;
+            
+            const query = searchInput.value.toLowerCase().trim();
+            state.searchQuery = query;
+            
+            // Apply search filter
+            setTimeout(() => {
+                document.querySelectorAll('.pitch-card').forEach(card => {
+                    const shouldBeVisible = query === '' || card.textContent.toLowerCase().includes(query);
+                    
+                    // Additional filtering based on current selection
+                    if (state.currentFilter !== 'all') {
+                        if (state.currentFilter.startsWith('priority-')) {
+                            const priority = state.currentFilter.split('-')[1];
+                            const priorityClass = priority === '1' ? '.priority-high' : 
+                                                priority === '2' ? '.priority-medium' : '.priority-low';
+                            shouldBeVisible = shouldBeVisible && card.matches(priorityClass);
+                        } else if (state.currentFilter.startsWith('company-')) {
+                            const company = state.currentFilter.split('-')[1];
+                            shouldBeVisible = shouldBeVisible && card.matches('.company-' + company);
+                        }
+                    }
+                    
+                    card.classList.toggle('hidden', !shouldBeVisible);
+                });
+                
+                trackFilterChange('search');
+            }, 100); // Small debounce
         }
+        
+        function highlightActiveFilter(target = null) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to target
+            if (target && target.classList.contains('nav-btn')) {
+                target.classList.add('active');
+            } else {
+                // Find button matching current filter
+                const filterButton = document.querySelector(`[onclick*="${state.currentFilter}"]`);
+                if (filterButton) {
+                    filterButton.classList.add('active');
+                } else {
+                    // Default to 'All' button
+                    document.querySelector('.nav-btn').classList.add('active');
+                }
+            }
+        }
+        
+        function initKeyboardNavigation() {
+            // Add keyboard support for navigation buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.setAttribute('tabindex', '0');
+                btn.setAttribute('role', 'button');
+                
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        btn.click();
+                    }
+                });
+            });
+            
+            // Add keyboard support for search
+            const searchInput = document.getElementById('search');
+            if (searchInput) {
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        searchInput.value = '';
+                        state.searchQuery = '';
+                        filterPitches();
+                    }
+                });
+            }
+        }
+        
+        // Analytics/telemetry (stub for future implementation)
+        function trackFilterChange(filterType) {
+            // Can be extended with analytics service
+            console.log('Filter changed:', filterType);
+        }
+        
+        // Export functions for potential external use
+        window.pitchManager = {
+            showAll,
+            showPriority,
+            showCompany,
+            filterPitches,
+            getState: () => ({ ...state })
+        };
     </script>
 </body>
 </html>
