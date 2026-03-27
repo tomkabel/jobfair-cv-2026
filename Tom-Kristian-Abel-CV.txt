@@ -1,0 +1,202 @@
+CURRICULUM VITAE
+
+Tom Kristian Abel
+Founder & Principal Security Consultant at ProksiAbel OÜ — CTO at MatX.ee
+tomkristianabel@gmail.com
+
+linkedin.com/in/hr-abel
+
+Estonia
+
+About
+
+01
+
+Security researcher turned CTO. I started as a developer building systems before realizing it's a lot more fun to break them. My approach is
+architectural — I go after root causes, not individual vulnerabilities. That mindset won my team first place at the FELLIN HÄKK 2026
+hackathon. I work with engineering leaders who are done with security theater and want to actually harden their stack. Founder of ProksiAbel
+OÜ, now leading technology at MatX.ee.
+
+02
+
+Experience
+
+Chief Technology Officer
+
+Feb 2026 — Present
+
+MatX.ee
+Estonia
+
+›
+
+Lead all technical strategy, architecture, and product deployment
+
+›
+
+Built full-stack MVP: React 18 + Express.js + Drizzle ORM + PostgreSQL
+
+›
+
+Designed intelligent error classification system (7 types: sign_error, magnitude_error, calculation_error, formula_error, procedure_error, concept_error, partial_correct)
+
+›
+
+Implemented adaptive question engine targeting weakest competencies in real-time
+
+›
+
+Architecting teacher analytics: mastery heatmaps, student cards, intervention alerts
+
+›
+
+1st Place, FELLIN HÄKK 2026 Hackathon
+
+Founder & Principal Security Researcher
+
+Jun 2024 — Present
+
+ProksiAbel OÜ
+Estonia
+
+›
+
+Offensive security consulting for enterprise clients
+
+›
+
+Custom tool development in Golang with concurrent frameworks
+
+›
+
+Reverse-engineered obfuscated JavaScript to uncover critical vulnerabilities
+
+›
+
+Developed PoC bypassing major platforms client-side bot detection & fingerprinting
+
+Independent Security Researcher
+
+Jun 2021 — Present
+
+Self-employed
+Remote
+
+›
+
+Pioneered offensive research methodologies, engineering novel attack vectors and weaponizing custom analysis techniques
+
+›
+
+Reverse-engineered complex JavaScript architectures, deconstructing obfuscated logic to uncover and exploit critical vulnerabilities
+
+›
+
+Defeated enterprise-grade defenses, architecting a Proof-of-Concept that successfully bypassed a major platform's client-side bot detection and fingerprinting systems
+
+›
+
+Architected high-performance offensive tooling in Golang, building concurrent frameworks to automate reconnaissance and accelerate vulnerability discovery
+
+Software Developer
+Smaily — Email Marketing & Automation
+Tallinn, Estonia
+
+›
+
+Played pivotal role in enhancing Smailys integration ecosystem, directly impacting client satisfaction and retention
+
+›
+
+Owned the development of plugins that enabled seamless integration with popular platforms, driving user engagement
+
+›
+
+Ensured high performance and reliability by implementing effective bug fixes across the plugin portfolio
+
+›
+
+Collaborated closely with product and support teams to deliver elegant solutions that met client needs
+
+Sep 2019 — May 2021
+
+Expertise
+
+03
+
+SECURITY
+
+ENGINEERING
+
+Offensive Security
+
+Penetration Testing
+
+Reverse Engineering
+
+Vulnerability Research
+
+Bot Detection Bypass
+
+Social Engineering
+
+Golang
+
+JavaScript
+
+Performance Tuning
+
+DevOps
+
+Database Optimization
+
+Concurrent Systems
+
+LEADERSHIP
+
+CTO
+
+Security Architecture
+
+Research & Development
+
+04
+
+Technical Strategy
+
+Team Building
+
+Education
+
+Software Engineering Program
+
+2026 — 2027
+
+kood/Jõhvi
+
+Micro-degree — Software Engineering: Junior to Senior Developer
+
+Jan 2026 — May 2026
+
+TalTech — Tallinn University of Technology
+
+Software Developer
+
+2017 — 2020
+
+Tallinn Polytechnic School
+
+05
+
+Estonian
+
+Languages
+Native
+
+English
+
+Professional
+
+Generated March 2026 — tomkristianabel@gmail.com
+
+
